@@ -8,6 +8,8 @@ var port = process.env.PORT || config.defaultPort;
 
 gulp.task('help', $.taskListing);
 
+gulp.task('default', ['help']);
+
 gulp.task('vet', function(){
   return gulp
   .src(config.alljs)
@@ -47,6 +49,26 @@ gulp.task('clean-fonts', function(done) {
 
 gulp.task('clean-images', function(done) {
    clean(config.build + 'images/**/*.*', done);
+});
+
+gulp.task('clean-code', function(done) {
+  var files = [].concat(
+    config.temp + '**/*.js',
+    config.build + '**/*.html',
+    config.build + '**/*.js'
+  );
+   clean(files, done);
+});
+
+gulp.task('templatecache', function() {
+   return gulp
+   .src(config.htmltemplates)
+   .pipe($.minifyHtml({empty: true}))
+   .pipe($.angularTemplatecache(
+     config.templateCache.file,
+     config.templateCache.options
+   ))
+   .pipe(gulp.dest(config.temp))
 });
 
 gulp.task('less-watcher', function() {

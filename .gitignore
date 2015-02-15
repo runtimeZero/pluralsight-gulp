@@ -13,6 +13,7 @@ node_modules
 bower_components
 build
 #.tmp
+temp
 
 # Ignore Test reporters
 ###################
@@ -70,4 +71,3 @@ journal
 ehthumbs.db
 Icon?
 Thumbs.db
-

@@ -23,7 +23,8 @@ module.exports = function() {
         css: temp + 'style.css',
         defaultPort: 7203,
         fonts: './bower_components/font-awesome/fonts/**/**',
-        images: '/images/**/*.*',
+        htmltemplates: client + '**/*.html',
+        images: client + '/images/**/*.*',
         index: client + 'index.html',
         js: [
             clientApp + '**/*.module.js',
@@ -33,7 +34,16 @@ module.exports = function() {
         less: client + 'styles/styles.less',
         nodeServer: './src/server/app.js',
         server: server,
-        temp: temp
+        temp: temp,
+        templateCache: {
+          file: 'templates.js',
+          options: {
+            module:'app.core',
+            standAlone: false,
+            root: 'app/'
+          }
+        }
+
     };
 
     config.getWiredepDefaultOptions = function() {
