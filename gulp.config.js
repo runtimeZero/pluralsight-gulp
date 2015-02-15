@@ -6,33 +6,34 @@ module.exports = function() {
     var temp = './temp/';
 
     var config = {
-        temp: temp,
 
         /* all js to vet */
         alljs: [
             './src/**/*.js',
             './.js'
         ],
-         css: temp + 'style.css',
-        client: client,
-        index: client + 'index.html',
-        less: client + 'styles/styles.less',
-        js: [
-            clientApp + '**/*.module.js',
-            clientApp + '**/*.js',
-
-        ],
-        server: server,
-
         bower: {
             bowerJson: require('./bower.json'),
             directory: './bower_components',
             ignorePath: '../..'
         },
+        browserReloadDelay: 1000,
+        build: './build/',
+        client: client,
+        css: temp + 'style.css',
         defaultPort: 7203,
-        nodeServer: './src/server/app.js',
-        browserReloadDelay: 1000
+        fonts: './bower_components/font-awesome/fonts/**/**',
+        images: '/images/**/*.*',
+        index: client + 'index.html',
+        js: [
+            clientApp + '**/*.module.js',
+            clientApp + '**/*.js',
 
+        ],
+        less: client + 'styles/styles.less',
+        nodeServer: './src/server/app.js',
+        server: server,
+        temp: temp
     };
 
     config.getWiredepDefaultOptions = function() {

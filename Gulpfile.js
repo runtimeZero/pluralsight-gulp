@@ -6,6 +6,8 @@ var  config = require('./gulp.config.js')();
 var $ = require('gulp-load-plugins')({lazy: true});
 var port = process.env.PORT || config.defaultPort;
 
+gulp.task('help', $.taskListing);
+
 gulp.task('vet', function(){
   return gulp
   .src(config.alljs)
@@ -28,9 +30,23 @@ gulp.task('styles', ['clean-styles'], function(){
 
 });
 
+gulp.task('clean', function(done) {
+   var  delconfig = [].concat(config.build, config.temp);
+   $.util.log('cleaning: ' + $.util.colors.blue(delconfig));
+   del(delconfig,done);
+});
+
 gulp.task('clean-styles', function(done) {
    var  files = config.temp + '**/*.css';
    clean(files, done);
+});
+
+gulp.task('clean-fonts', function(done) {
+   clean(config.build + 'fonts/**/*.*', done);
+});
+
+gulp.task('clean-images', function(done) {
+   clean(config.build + 'images/**/*.*', done);
 });
 
 gulp.task('less-watcher', function() {
@@ -92,6 +108,21 @@ gulp.task('serve-dev', ['inject'], function() {
      .on('exit', function() {
        $.util.log('*** nodemon exited: Nodemon closed smoothly  ***');
      })
+});
+
+gulp.task('fonts', ['clean-fonts'], function(){
+   $.util.log('Copying fonts');
+
+   return gulp
+     .src(config.fonts)
+     .pipe(gulp.dest(config.build + 'fonts'));
+});
+
+gulp.task('images', ['clean-images'], function() {
+   return gulp
+   .src(config.images)
+     .pipe($.imagemin({optimization: 4}))
+     .pipe(gulp.dest(config.build + 'images'));
 });
 /////////////
 function clean(path, done) {
